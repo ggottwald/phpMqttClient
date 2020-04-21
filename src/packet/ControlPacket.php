@@ -73,10 +73,22 @@ abstract class ControlPacket {
         $byte1 = static::getControlPacketType() << 4;
         $byte1 = $this->addReservedBitsToFixedHeaderControlPacketType($byte1);
 
-        $byte2 = $this->getRemainingLength();
+        $remaining = $this->getRemainingLength();
 
-        return chr($byte1)
-             . chr($byte2);
+        $header = chr($byte1);
+        do {
+            $digit = $remaining % 128;
+
+            $remaining = intval($remaining / 128);
+
+            if ($remaining > 0) {
+                $digit |= 0x80;
+            }
+
+            $header .= chr($digit);
+        } while ($remaining > 0);
+
+        return $header;
     }
 
     /**

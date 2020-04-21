@@ -20,11 +20,11 @@ class Factory
      */
     public static function getNextPacket(Version $version, $remainingData)
     {
-        while(isset($remainingData{1})) {
+        while(isset($remainingData[1])) {
             $byte = 1;
             $packetLength = 0;
             do {
-                $digit = ord($remainingData{$byte});
+                $digit = ord($remainingData[$byte]);
                 $packetLength += $digit;
                 $byte++;
             } while (($digit & 128) != 0);
@@ -38,7 +38,7 @@ class Factory
 
     private static function getByMessage(Version $version, $input, $topicStart = 2)
     {
-        $controlPacketType = ord($input{0}) >> 4;
+        $controlPacketType = ord($input[0]) >> 4;
 
         switch ($controlPacketType) {
             case ConnectionAck::getControlPacketType():
