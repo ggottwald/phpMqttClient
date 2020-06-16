@@ -41,7 +41,7 @@ class Publish extends ControlPacket
         $topic = static::getPayloadLengthPrefixFieldInRawInput($topicStart, $rawInput);
         $packet->setTopic($topic);
 
-        $byte1 = $rawInput{0};
+        $byte1 = $rawInput[0];
         if (!empty($byte1)) {
             $packet->setRetain(($byte1 & 1) === 1);
             if (($byte1 & 2) === 2) {

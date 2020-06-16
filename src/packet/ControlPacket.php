@@ -38,7 +38,7 @@ abstract class ControlPacket {
 
     protected static function checkRawInputValidControlPackageType($rawInput)
     {
-        $packetType = ord($rawInput{0}) >> 4;
+        $packetType = ord($rawInput[0]) >> 4;
         if ($packetType !== static::getControlPacketType()) {
             throw new \RuntimeException('raw input is not valid for this control packet');
         }
@@ -153,7 +153,7 @@ abstract class ControlPacket {
     {
         $headerLength = 2;
         $header = substr($rawInput, $startIndex, $headerLength);
-        $lengthOfMessage = ord($header{1});
+        $lengthOfMessage = ord($header[1]);
 
         return substr($rawInput, $startIndex + $headerLength, $lengthOfMessage);
     }
