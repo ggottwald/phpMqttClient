@@ -42,7 +42,7 @@ class Publish extends ControlPacket
         $packet->setTopic($topic);
 
         $byte1 = $rawInput[0];
-        if (!empty($byte1)) {
+        if (!empty($byte1) && is_numeric($byte1)) {
             $packet->setRetain(($byte1 & 1) === 1);
             if (($byte1 & 2) === 2) {
                 $packet->setQos(1);
